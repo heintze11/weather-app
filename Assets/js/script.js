@@ -15,7 +15,11 @@ var search = document.querySelector("#search");
 
 
 function addWeather(event) {
-    var city = localStorage.getItem(city);
+    event.preventDefault()
+    var city = document.querySelector("#city-search").value;
+    localStorage.setItem("city", event.target.previousElementSibling.value);
+
+    
     var apiCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=1e64d4984f9bd49dd45881e4e3f332ca";
     // fetch (currentWeather)
     console.log(apiCurrent);
@@ -26,8 +30,4 @@ function addWeather(event) {
     console.log(apiFive);
 }
 
-search.addEventListener("click", function(event){
-    event.preventDefault();
-    localStorage.setItem("city", event.target.previousElementSibling.value);
-    addWeather;
-});
+search.addEventListener("click", addWeather);
