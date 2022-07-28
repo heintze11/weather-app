@@ -1,6 +1,6 @@
 h1 {
     text-align: center;
     margin: 20px 10px;
-    background-image: linear-gradient(to right, lightblue, darkblue);
+    background-image: linear-gradient(to right, rgb(168, 169, 247), rgb(1, 1, 104));
     color: yellow;
 }
