@@ -11,22 +11,60 @@
 
 // var city = "denver";
 // const apiKey = "1e64d4984f9bd49dd45881e4e3f332ca";
-var search = document.querySelector("#search");
+let search = document.querySelector("#search");
+let currentWeatherCard = document.querySelector("#current-weather-card");
+let temp = document.querySelector("#temp");
+let wind = document.querySelector("#wind");
+let humid = document.querySelector("#humidity");
+let uvIndex = document.querySelector("#uv-index");
+let currentCity = document.querySelector("#current-city");
 
 
 function addWeather(event) {
     event.preventDefault()
-    var city = document.querySelector("#city-search").value;
+    let city = document.querySelector("#city-search").value;
     localStorage.setItem("city", event.target.previousElementSibling.value);
-    var apiCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=1e64d4984f9bd49dd45881e4e3f332ca";
-    var apiFive = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=5&appid=1e64d4984f9bd49dd45881e4e3f332ca";
-    fetch(apiCurrent)
-    .then((response) => response.json())
-    .then((data) => console.log(data))
 
-    // fetch(apiFive)
-    // .then((response) => response.json())
-    // .then((data) => console.log(data))
+//get lat and long
+    let location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
+    let lat;
+    let lon;
+
+    fetch(location)
+    .then((response) => response.json())
+    .then(function (data){
+        //use lat and long to pull weather
+        console.log(data);
+        lat = data[0].lat;
+        lon = data[0].lon;
+        let apiCurrent = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=1e64d4984f9bd49dd45881e4e3f332ca";
+
+        fetch(apiCurrent)
+        .then((response) => response.json())
+        .then(function(data){
+            //set all data from weather
+            console.log(data);
+            let currentTemp = data.current.temp;
+            console.log(currentTemp);
+            let currentWind = data.current.wind_speed;
+            let currentHumid = data.current.humidity;
+            let currentUv = data.current.uvi;
+            let weathIcon = data.current.weather[0].icon;
+            let cityUpper = city.toUpperCase();
+            currentCity.textContent += " " + cityUpper;
+            temp.textContent += " " + currentTemp + "° F";
+            wind.textContent += " " + currentWind + " MPH"
+            humid.textContent += " " + currentHumid + "%";
+            uvIndex.textContent += " " + currentUv;
+        });
+    
+    });
+ 
+    
+   
+  
+    
 }
 
 search.addEventListener("click", addWeather);
+
