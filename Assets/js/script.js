@@ -103,7 +103,7 @@ function postData(data) {
     currentCity.textContent += " " + cityUpper + " " + today;
     currentIcon.src = weathIconLink;
     currentIcon.setAttribute("style", "display: inline");
-    temp.textContent = "Temp: " + currentTemp + "° F";
+    temp.textContent = "Temp: " + currentTemp + "°F";
     wind.textContent = "Wind: " + currentWind + " MPH"
     humid.textContent = "Humidity: " + currentHumid + "%";
     uvIndex.textContent = "UV Index: " + currentUv;
@@ -184,7 +184,7 @@ function storeData(){
     cityArray.unshift(city);
     }
     
-    cityArray.splice(5);
+    cityArray.splice(10);
     
     localStorage.setItem("cities", JSON.stringify(cityArray));
 
@@ -196,7 +196,7 @@ function preCities(){
     // post previous cities to div under search
     let preCity = JSON.parse(localStorage.getItem("cities"));
     for (let i = 0; i < preCity.length; i++) {
-        let button = document.createElement("button")
+        let button = document.createElement("button");
         button.setAttribute("text", preCity[i]);
         previousCityButtons.appendChild(button);
         
