@@ -8,8 +8,9 @@
 // store weather data in local storage...? 
 // how to update if it is searched for later...?
 
+//Add Dates
+//hide icon i
 
-// var city = "denver";
 // const apiKey = "1e64d4984f9bd49dd45881e4e3f332ca";
 let search = document.querySelector("#search");
 let currentWeatherCard = document.querySelector("#current-weather-card");
@@ -18,17 +19,25 @@ let wind = document.querySelector("#wind");
 let humid = document.querySelector("#humidity");
 let uvIndex = document.querySelector("#uv-index");
 let currentCity = document.querySelector("#current-city");
+let currentIcon = document.querySelector("#current-icon");
+let city;
 
-
-function addWeather(event) {
+function getData(event) {
     event.preventDefault()
-    let city = document.querySelector("#city-search").value;
+    city = document.querySelector("#city-search").value;
     localStorage.setItem("city", event.target.previousElementSibling.value);
 
-//get lat and long
+    //get lat and long
     let location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
     let lat;
     let lon;
+    //clear text content for new search
+    currentCity.textContent = "";
+    currentIcon.textContent = "";
+    temp.textContent = "";
+    wind.textContent = "";
+    humid.textContent = "";
+    uvIndex.textContent = "";
 
     fetch(location)
     .then((response) => response.json())
@@ -43,28 +52,34 @@ function addWeather(event) {
         .then((response) => response.json())
         .then(function(data){
             //set all data from weather
-            console.log(data);
-            let currentTemp = data.current.temp;
-            console.log(currentTemp);
-            let currentWind = data.current.wind_speed;
-            let currentHumid = data.current.humidity;
-            let currentUv = data.current.uvi;
-            let weathIcon = data.current.weather[0].icon;
-            let cityUpper = city.toUpperCase();
-            currentCity.textContent += " " + cityUpper;
-            temp.textContent += " " + currentTemp + "° F";
-            wind.textContent += " " + currentWind + " MPH"
-            humid.textContent += " " + currentHumid + "%";
-            uvIndex.textContent += " " + currentUv;
+            postData(data);
+            return(data);
+            
+            
         });
     
     });
- 
-    
-   
-  
     
 }
 
-search.addEventListener("click", addWeather);
+function postData (data){
+    console.log(data);
+    let currentTemp = data.current.temp;
+    console.log(currentTemp);
+    let currentWind = data.current.wind_speed;
+    let currentHumid = data.current.humidity;
+    let currentUv = data.current.uvi;
+    let weathIcon = data.current.weather[0].icon;
+    let weathIconLink = "http://openweathermap.org/img/w/" + weathIcon + ".png";
+    let cityUpper = city.toUpperCase();
+    currentCity.textContent += " " + cityUpper;
+    currentIcon.src = weathIconLink;
+    currentIcon.setAttribute("style", "display: inline");
+    temp.textContent = "Temp: " + currentTemp + "° F";
+    wind.textContent = "Wind: " + currentWind + " MPH"
+    humid.textContent = "Humidity: " + currentHumid + "%";
+    uvIndex.textContent = "UV Index: " + currentUv;
+};
+
+search.addEventListener("click", getData);
 

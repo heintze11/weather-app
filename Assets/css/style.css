@@ -4,3 +4,7 @@ h1 {
     background-image: linear-gradient(to right, rgb(168, 169, 247), rgb(1, 1, 104));
     color: yellow;
 }
+
+#current-icon {
+    display: none;
+}
