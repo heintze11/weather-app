@@ -13,7 +13,6 @@
 
 // const apiKey = "1e64d4984f9bd49dd45881e4e3f332ca";
 let search = document.querySelector("#search");
-let currentWeatherCard = document.querySelector("#current-weather-card");
 let temp = document.querySelector("#temp");
 let wind = document.querySelector("#wind");
 let humid = document.querySelector("#humidity");
@@ -21,6 +20,7 @@ let uvIndex = document.querySelector("#uv-index");
 let currentCity = document.querySelector("#current-city");
 let currentIcon = document.querySelector("#current-icon");
 let city;
+let cityArray = [];
 let today = moment().format('MM/DD/YYYY');
 let dateOne = document.querySelector("#date-one");
 let iconOne = document.querySelector("#icon-one");
@@ -54,7 +54,8 @@ let humidityFive = document.querySelector("#humidity-five");
 function getData(event) {
     event.preventDefault()
     city = document.querySelector("#city-search").value;
-    localStorage.setItem("city", event.target.previousElementSibling.value);
+    storeData();
+    
 
     //get lat and long
     let location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
@@ -107,8 +108,6 @@ function postData(data) {
     uvIndex.textContent = "UV Index: " + currentUv;
 
     // post 5-Day Forecast
-    
-
     let day1Temp = data.daily[1].temp.max;
     let day1Wind = data.daily[1].wind_speed;
     let day1Humid = data.daily[1].humidity;
@@ -117,7 +116,7 @@ function postData(data) {
     dateOne.textContent = moment().add(1,'days').format('MM/DD/YYYY');
     tempOne.textContent = "Temp: " + day1Temp + "°F";
     windOne.textContent = "Wind: " + day1Wind + " MPH";
-    humidityOne.textContent = "Hunidity: " + day1Humid + "%";
+    humidityOne.textContent = "Humidity: " + day1Humid + "%";
     iconOne.src = day1WeathIconLink;
     iconOne.setAttribute("style", "display: inline");
 
@@ -129,7 +128,7 @@ function postData(data) {
     dateTwo.textContent = moment().add(2,'days').format('MM/DD/YYYY');
     tempTwo.textContent = "Temp: " + day2Temp + "°F";
     windTwo.textContent = "Wind: " + day2Wind + " MPH";
-    humidityTwo.textContent = "Hunidity: " + day2Humid + "%";
+    humidityTwo.textContent = "Humidity: " + day2Humid + "%";
     iconTwo.src = day2WeathIconLink;
     iconTwo.setAttribute("style", "display: inline");
 
@@ -141,7 +140,7 @@ function postData(data) {
     dateThree.textContent = moment().add(3,'days').format('MM/DD/YYYY');
     tempThree.textContent = "Temp: " + day3Temp + "°F";
     windThree.textContent = "Wind: " + day3Wind + " MPH";
-    humidityThree.textContent = "Hunidity: " + day3Humid + "%";
+    humidityThree.textContent = "Humidity: " + day3Humid + "%";
     iconThree.src = day3WeathIconLink;
     iconThree.setAttribute("style", "display: inline");
 
@@ -153,7 +152,7 @@ function postData(data) {
     dateFour.textContent = moment().add(4,'days').format('MM/DD/YYYY');
     tempFour.textContent = "Temp: " + day4Temp + "°F";
     windFour.textContent = "Wind: " + day4Wind + " MPH";
-    humidityFour.textContent = "Hunidity: " + day4Humid + "%";
+    humidityFour.textContent = "Humidity: " + day4Humid + "%";
     iconFour.src = day4WeathIconLink;
     iconFour.setAttribute("style", "display: inline");
     
@@ -165,15 +164,40 @@ function postData(data) {
     dateFive.textContent = moment().add(5,'days').format('MM/DD/YYYY');
     tempFive.textContent = "Temp: " + day5Temp + "°F";
     windFive.textContent = "Wind: " + day5Wind + " MPH";
-    humidityFive.textContent = "Hunidity: " + day5Humid + "%";
+    humidityFive.textContent = "Humidity: " + day5Humid + "%";
     iconFive.src = day5WeathIconLink;
     iconFive.setAttribute("style", "display: inline");
 
 };
 
+function storeData(){
+    // store city data in local storage as array
+    // append to array new city to start
+    // cap array at 5 cities
+    let previousCities = JSON.parse(localStorage.getItem("cities"));
+    if (previousCities == null){
+        cityArray.push(city);
 
+    } else {
+    cityArray = previousCities;
+    cityArray.unshift(city);
+    }
+    
+    cityArray.splice(5);
+    
+    localStorage.setItem("cities", JSON.stringify(cityArray));
 
+    cityArray = [];
+    preCities();
+}
 
+function preCities(){
+    // post previous cities to div under search
+    let preCity = JSON.parse(localStorage.getItem("cities"));
+
+    console.log(preCity);
+
+}
 
 
 
