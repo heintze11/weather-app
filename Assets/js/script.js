@@ -47,6 +47,7 @@ let iconFive = document.querySelector("#icon-five");
 let tempFive = document.querySelector("#temp-five");
 let windFive = document.querySelector("#wind-five");
 let humidityFive = document.querySelector("#humidity-five");
+let previousCityButtons = document.querySelector("#previous-cities");
 
 
 
@@ -194,6 +195,12 @@ function storeData(){
 function preCities(){
     // post previous cities to div under search
     let preCity = JSON.parse(localStorage.getItem("cities"));
+    for (let i = 0; i < preCity.length; i++) {
+        let button = document.createElement("button")
+        button.setAttribute("text", preCity[i]);
+        previousCityButtons.appendChild(button);
+        
+    }
 
     console.log(preCity);
 
