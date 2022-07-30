@@ -48,13 +48,13 @@ let tempFive = document.querySelector("#temp-five");
 let windFive = document.querySelector("#wind-five");
 let humidityFive = document.querySelector("#humidity-five");
 let previousCityButtons = document.querySelector("#previous-cities");
-
+let previousButtons = document.querySelector(".btn-block");
 
 
 
 function getData(event) {
-    event.preventDefault()
-    city = document.querySelector("#city-search").value;
+
+
     storeData();
     
 
@@ -171,6 +171,10 @@ function postData(data) {
 
 };
 
+function getOldItem(){
+
+}
+
 function storeData(){
     // store city data in local storage as array
     // append to array new city to start
@@ -193,20 +197,34 @@ function storeData(){
 }
 
 function preCities(){
+    // Delete the previous city buttons
+    previousCityButtons.innerHTML = "";
     // post previous cities to div under search
+
+
     let preCity = JSON.parse(localStorage.getItem("cities"));
     for (let i = 0; i < preCity.length; i++) {
         let button = document.createElement("button");
-        button.setAttribute("text", preCity[i]);
+        button.innerHTML = preCity[i];
+        button.classList.add("btn", "btn-info", "btn-lg", "btn-block");
         previousCityButtons.appendChild(button);
-        
-    }
+    }    
 
-    console.log(preCity);
 
 }
 
+preCities();
 
+// add event listener to main search button
+search.addEventListener("click", function(event){
+    event.preventDefault()
+    city = document.querySelector("#city-search").value;
+    getData();
+});
 
-search.addEventListener("click", getData);
+// Add event listener to previous search items
 
+previousCityButtons.addEventListener("click", function(event){
+    city = event.target.value;
+    getData();
+});
