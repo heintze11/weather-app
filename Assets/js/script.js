@@ -107,6 +107,13 @@ function postData(data) {
     wind.textContent = "Wind: " + currentWind + " MPH"
     humid.textContent = "Humidity: " + currentHumid + "%";
     uvIndex.textContent = "UV Index: " + currentUv;
+    if(currentUv < 2){
+        uvIndex.setAttribute("style", "background-color: green")
+    } else if(currentUv < 6){
+        uvIndex.setAttribute("style", "background-color: yellow")
+    }else{
+        uvIndex.setAttribute("style", "background-color: red")
+    }
 
     // post 5-Day Forecast
     let day1Temp = data.daily[1].temp.max;
@@ -178,7 +185,7 @@ function getOldItem(){
 function storeData(){
     // store city data in local storage as array
     // append to array new city to start
-    // cap array at 5 cities
+    // cap array at 10 cities
     let previousCities = JSON.parse(localStorage.getItem("cities"));
     if (previousCities == null){
         cityArray.push(city);
@@ -203,12 +210,13 @@ function preCities(){
 
 
     let preCity = JSON.parse(localStorage.getItem("cities"));
+    if(preCity != null){
     for (let i = 0; i < preCity.length; i++) {
         let button = document.createElement("button");
         button.innerHTML = preCity[i];
         button.classList.add("btn", "btn-info", "btn-lg", "btn-block");
         previousCityButtons.appendChild(button);
-    }    
+    }}
 
 
 }
@@ -225,6 +233,7 @@ search.addEventListener("click", function(event){
 // Add event listener to previous search items
 
 previousCityButtons.addEventListener("click", function(event){
-    city = event.target.value;
+    city = event.target.innerText;
+    console.log(event);
     getData();
 });
