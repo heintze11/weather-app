@@ -81,7 +81,6 @@ function getData(event) {
 
 //create function to pull specific data from fetch data and post to page
 function postData(data) {
-    console.log(data);
     let currentTemp = data.current.temp;
     let currentWind = data.current.wind_speed;
     let currentHumid = data.current.humidity;
@@ -218,6 +217,5 @@ search.addEventListener("click", function(event){
 // Add event listener to previous search items
 previousCityButtons.addEventListener("click", function(event){
     city = event.target.innerText;
-    console.log(event);
     getData();
 });
