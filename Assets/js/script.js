@@ -1,17 +1,5 @@
-// create search button for cities
-// use api key to pull weather data for specific city
-// store searched city in local storage
-// post current weather into upper div
-// post 5 day forecast into cards 
-// save searched city as a button for easy access
-// store searched cities
-// store weather data in local storage...? 
-// how to update if it is searched for later...?
 
-//Add Dates
-//hide icon i
-
-// const apiKey = "1e64d4984f9bd49dd45881e4e3f332ca";
+// set variables
 let search = document.querySelector("#search");
 let temp = document.querySelector("#temp");
 let wind = document.querySelector("#wind");
@@ -22,6 +10,7 @@ let currentIcon = document.querySelector("#current-icon");
 let city;
 let cityArray = [];
 let today = moment().format('MM/DD/YYYY');
+//5 day forecast
 let dateOne = document.querySelector("#date-one");
 let iconOne = document.querySelector("#icon-one");
 let tempOne = document.querySelector("#temp-one");
@@ -54,11 +43,9 @@ let previousButtons = document.querySelector(".btn-block");
 
 function getData(event) {
 
-
     storeData();
     
-
-    //get lat and long
+    
     let location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
     let lat;
     let lon;
@@ -70,6 +57,7 @@ function getData(event) {
     humid.textContent = "";
     uvIndex.textContent = "";
 
+    //get lat and long
     fetch(location)
         .then((response) => response.json())
         .then(function (data) {
@@ -78,6 +66,7 @@ function getData(event) {
             lon = data[0].lon;
             let apiCurrent = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=1e64d4984f9bd49dd45881e4e3f332ca";
 
+            //use lat and long to pull weather
             fetch(apiCurrent)
                 .then((response) => response.json())
                 .then(function (data) {
@@ -178,9 +167,6 @@ function postData(data) {
 
 };
 
-function getOldItem(){
-
-}
 
 function storeData(){
     // store city data in local storage as array
@@ -199,6 +185,7 @@ function storeData(){
     
     localStorage.setItem("cities", JSON.stringify(cityArray));
 
+    //clear for next search
     cityArray = [];
     preCities();
 }
@@ -217,8 +204,6 @@ function preCities(){
         button.classList.add("btn", "btn-info", "btn-lg", "btn-block");
         previousCityButtons.appendChild(button);
     }}
-
-
 }
 
 preCities();
@@ -231,7 +216,6 @@ search.addEventListener("click", function(event){
 });
 
 // Add event listener to previous search items
-
 previousCityButtons.addEventListener("click", function(event){
     city = event.target.innerText;
     console.log(event);
