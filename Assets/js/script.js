@@ -46,7 +46,7 @@ function getData(event) {
     storeData();
     
     
-    let location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
+    let location = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=1e64d4984f9bd49dd45881e4e3f332ca";
     let lat;
     let lon;
     //clear text content for new search
@@ -86,7 +86,7 @@ function postData(data) {
     let currentHumid = data.current.humidity;
     let currentUv = data.current.uvi;
     let weathIcon = data.current.weather[0].icon;
-    let weathIconLink = "http://openweathermap.org/img/w/" + weathIcon + ".png";
+    let weathIconLink = "https://openweathermap.org/img/w/" + weathIcon + ".png";
     let cityUpper = city.toUpperCase();
     currentCity.textContent += " " + cityUpper + " " + today;
     currentIcon.src = weathIconLink;
@@ -108,7 +108,7 @@ function postData(data) {
     let day1Wind = data.daily[1].wind_speed;
     let day1Humid = data.daily[1].humidity;
     let day1WeathIcon = data.daily[1].weather[0].icon;
-    let day1WeathIconLink = "http://openweathermap.org/img/w/" + day1WeathIcon + ".png";
+    let day1WeathIconLink = "https://openweathermap.org/img/w/" + day1WeathIcon + ".png";
     dateOne.textContent = moment().add(1,'days').format('MM/DD/YYYY');
     tempOne.textContent = "Temp: " + day1Temp + "°F";
     windOne.textContent = "Wind: " + day1Wind + " MPH";
@@ -120,7 +120,7 @@ function postData(data) {
     let day2Wind = data.daily[2].wind_speed;
     let day2Humid = data.daily[2].humidity;
     let day2WeathIcon = data.daily[2].weather[0].icon;
-    let day2WeathIconLink = "http://openweathermap.org/img/w/" + day2WeathIcon + ".png";
+    let day2WeathIconLink = "https://openweathermap.org/img/w/" + day2WeathIcon + ".png";
     dateTwo.textContent = moment().add(2,'days').format('MM/DD/YYYY');
     tempTwo.textContent = "Temp: " + day2Temp + "°F";
     windTwo.textContent = "Wind: " + day2Wind + " MPH";
@@ -132,7 +132,7 @@ function postData(data) {
     let day3Wind = data.daily[3].wind_speed;
     let day3Humid = data.daily[3].humidity;
     let day3WeathIcon = data.daily[3].weather[0].icon;
-    let day3WeathIconLink = "http://openweathermap.org/img/w/" + day3WeathIcon + ".png";
+    let day3WeathIconLink = "https://openweathermap.org/img/w/" + day3WeathIcon + ".png";
     dateThree.textContent = moment().add(3,'days').format('MM/DD/YYYY');
     tempThree.textContent = "Temp: " + day3Temp + "°F";
     windThree.textContent = "Wind: " + day3Wind + " MPH";
@@ -144,7 +144,7 @@ function postData(data) {
     let day4Wind = data.daily[4].wind_speed;
     let day4Humid = data.daily[4].humidity;
     let day4WeathIcon = data.daily[4].weather[0].icon;
-    let day4WeathIconLink = "http://openweathermap.org/img/w/" + day4WeathIcon + ".png";
+    let day4WeathIconLink = "https://openweathermap.org/img/w/" + day4WeathIcon + ".png";
     dateFour.textContent = moment().add(4,'days').format('MM/DD/YYYY');
     tempFour.textContent = "Temp: " + day4Temp + "°F";
     windFour.textContent = "Wind: " + day4Wind + " MPH";
@@ -156,7 +156,7 @@ function postData(data) {
     let day5Wind = data.daily[5].wind_speed;
     let day5Humid = data.daily[5].humidity;
     let day5WeathIcon = data.daily[5].weather[0].icon;
-    let day5WeathIconLink = "http://openweathermap.org/img/w/" + day5WeathIcon + ".png";
+    let day5WeathIconLink = "https://openweathermap.org/img/w/" + day5WeathIcon + ".png";
     dateFive.textContent = moment().add(5,'days').format('MM/DD/YYYY');
     tempFive.textContent = "Temp: " + day5Temp + "°F";
     windFive.textContent = "Wind: " + day5Wind + " MPH";
